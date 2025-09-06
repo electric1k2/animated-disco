@@ -1,0 +1,29 @@
+modules = ["python-3.11", "postgresql-16"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Telegram Bot"
+
+[[workflows.workflow]]
+name = "Telegram Bot"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pip install -r requirements.txt 2>/dev/null || pip install aiogram aiohttp sqlalchemy psycopg2-binary python-dotenv && python main.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
